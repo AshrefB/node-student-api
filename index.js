@@ -11,6 +11,7 @@ var students = [
 ]
 
 // MIDLLEWARES
+app.use(express.json())
 
 // ROUTES
 app.get('/api/students', (req, res) => {
@@ -21,6 +22,18 @@ app.get('/api/students/:id', (req, res) => {
     let student = students.find(s => s.id === parseInt(req.params.id))
     if(!student)
         return res.status(404).json({message: `Student with ${req.params.id} not found`})
+    res.status(200).json(student)
+})
+
+app.post('/api/students', (req, res) => {
+    let student = {
+        id: students.length+1,
+        name: req.body.name,
+        age: req.body.age 
+    }
+
+    students.push(student)
+    res.statusMessage = "Student created successfully"
     res.status(200).json(student)
 })
 
