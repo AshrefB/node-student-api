@@ -52,4 +52,14 @@ app.put('/api/students/:id', (req, res) => {
     res.status(200).json(students[index])
 })
 
+app.delete('/api/students/:id', (req, res) => {
+    let student = students.find(s => s.id === parseInt(req.params.id))
+    if(!student)
+        return res.status(404).json({message: `Student with ${req.params.id} not found`})
+    
+    students = students.filter(s => s !== student)
+    res.statusMessage = "Student deleted successfully"
+    res.status(200).json(students)
+})
+
 app.listen(port, () => console.log(`Server running on http://localhost:${port}`))
