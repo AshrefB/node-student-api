@@ -1,4 +1,5 @@
 const express = require('express')
+const morgan = require('morgan')
 const students_router = require('./routes/students')
 const logger = require('./middlewares/logger')
 const auth = require('./middlewares/auth')
@@ -10,6 +11,10 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 app.use(logger)
 app.use(auth)
+
+if(app.get('env') === 'development') {
+    app.use(morgan('tiny'))
+}
 
 // ROUTES
 app.use('/api/students', students_router)
