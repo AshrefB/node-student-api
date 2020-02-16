@@ -37,4 +37,19 @@ app.post('/api/students', (req, res) => {
     res.status(200).json(student)
 })
 
+app.put('/api/students/:id', (req, res) => {
+    let index = students.findIndex(s => s.id === parseInt(req.params.id))
+    if(index == -1)
+        return res.status(404).json({message: `Student with ${req.params.id} not found`})
+
+    students[index] = {
+        id: req.params.id,
+        name: req.body.name,
+        age: req.body.age 
+    }
+
+    res.statusMessage = "Student updated successfully"
+    res.status(200).json(students[index])
+})
+
 app.listen(port, () => console.log(`Server running on http://localhost:${port}`))
