@@ -1,7 +1,13 @@
 const express = require('express')
+const joi = require('joi')
 
 const app = express()
 const port = process.env.PORT || 3000
+
+const validation_schema = {
+    name: joi.string().min(3).max(20).required(),
+    age: joi.number().min(6).required()
+}
 
 // DATA
 var students = [
@@ -26,6 +32,10 @@ app.get('/api/students/:id', (req, res) => {
 })
 
 app.post('/api/students', (req, res) => {
+    const validation_result = joi.validate(req.body, validation_schema)
+    if(validation_result.error)
+        return res.status(400).json({message: validation_result.error.details[0].message})
+
     let student = {
         id: students.length+1,
         name: req.body.name,
@@ -41,6 +51,10 @@ app.put('/api/students/:id', (req, res) => {
     let index = students.findIndex(s => s.id === parseInt(req.params.id))
     if(index == -1)
         return res.status(404).json({message: `Student with ${req.params.id} not found`})
+
+    const validation_result = joi.validate(req.body, validation_schema)
+    if(validation_result.error)
+        return res.status(400).json({message: validation_result.error.details[0].message})
 
     students[index] = {
         id: req.params.id,
