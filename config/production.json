@@ -1,0 +1,7 @@
+{
+    "name":"STUDENTS_PROD_APP",
+    "mail" : {
+        "host": "mail_real@gmail.com",
+        "port": 559
+    }
+}
