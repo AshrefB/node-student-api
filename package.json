@@ -15,7 +15,7 @@
     "nodemon": "^2.0.2"
   },
   "dependencies": {
-    "config": "^3.2.5",
+    "config": "^3.3.8",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "joi": "^14.3.1"
